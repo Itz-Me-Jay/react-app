@@ -15,9 +15,11 @@ pool:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'f9975a12-2adb-465a-a9c1-83e85eabbfc5'
+    azureSubscription: 'project1React'
+    azureContainerRegistry: '{"loginServer":"project1react.azurecr.io", "id" : "/subscriptions/f9975a12-2adb-465a-a9c1-83e85eabbfc5/resourceGroups/React/providers/Microsoft.ContainerRegistry/registries/project1React"}'
   imageRepository: 'reactacr1'
   containerRegistry: 'reactacr1.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 stages:
 - stage: Build
@@ -25,20 +27,23 @@ stages:
   jobs:
   - job: Build
     displayName: Build
+
     steps:
     - task: Docker@1
       displayName: Build an image
       inputs:
-        command: build
-        dockerfilePath: $(Build.SourcesDirectory)/Dockerfile
+        azureSubscription: 'project1React'
+        dockerfile: $(Build.SourcesDirectory)/Dockerfile
+        azureContainerRegistry: '{"loginServer":"project1react.azurecr.io", "id" : "/subscriptions/f9975a12-2adb-465a-a9c1-83e85eabbfc5/resourceGroups/React/providers/Microsoft.ContainerRegistry/registries/project1React"}'
         tags: |
           $(tag)
+          
     - task: Docker@2
-      displayName: Build and push an image to container registry
+      displayName: Push a docker image to container registry
       inputs:
-        command: buildAndPush
+        azureSubscription: 'project1React'
+        azureContainerRegistry: '{"loginServer":"project1react.azurecr.io", "id" : "/subscriptions/f9975a12-2adb-465a-a9c1-83e85eabbfc5/resourceGroups/React/providers/Microsoft.ContainerRegistry/registries/project1React"}'
         repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        action: "push an image"
         tags: |
           $(tag)
