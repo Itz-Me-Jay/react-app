@@ -1,7 +1,7 @@
 # Stage 1 : React Application
 
 # Use an official Node runtime as a parent image
-FROM node:14 As build
+FROM node:18-alpine As build
 
 # Set the working directory in the container to /react-app
 WORKDIR /react-app
