@@ -1,8 +1,7 @@
 # Stage 1 : React Application
 
 # Use an official Node runtime as a parent image
-ARG NODE_VERSION=18
-FROM node:${NODE_VERSION}-alpine3.15 As build
+FROM node:18-alpine3.15 As build
 
 # Set the working directory in the container to /app
 WORKDIR /app
@@ -11,7 +10,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install any needed packages specified in package.json
-RUN npm install -g npm@latest
+RUN npm install 
 
 # Copy the current directory contents into the container at /app
 COPY . .
@@ -22,9 +21,9 @@ RUN npm run build
 # Stage 2 : nginx 
 
 # Use an official Nginx runtime as a parent image
-ENV NGINX_VERSION 1.19.0
 
-FROM nginx:${NGINX_VERSION}-alpine As serve
+
+FROM nginx:1.19.0-alpine As serve
 
 # Copy the build output from Stage 1 to the Nginx html directory
 COPY --from=build --chown=nginx:nginx /app/node_modules /usr/share/nginx/html/node_modules
