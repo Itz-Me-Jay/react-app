@@ -23,7 +23,7 @@ RUN npm run build
 # Use an official Nginx runtime as a parent image
 
 
-FROM nginx:1.19.0-alpine As serve
+FROM nginx:latest As serve
 
 # Copy the build output from Stage 1 to the Nginx html directory
 COPY --from=build --chown=nginx:nginx /app/node_modules /usr/share/nginx/html/node_modules
