@@ -10,7 +10,7 @@ WORKDIR /react-app
 COPY package.json package-lock.json ./
 
 # Install any needed packages specified in package.json
-RUN npm install
+RUN npm install -g npm@latest
 
 # Copy the current directory contents into the container at /react-app
 COPY . .
