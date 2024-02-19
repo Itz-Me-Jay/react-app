@@ -18,16 +18,19 @@ COPY . .
 # Run npm run build when the container launches
 RUN npm run build
 
-# Stage 2 : nginx 
-
-# Use an official Nginx runtime as a parent image
+EXPOSE 3000
 
 
-FROM nginx:latest As serve
+# # Stage 2 : nginx 
 
-# Copy the build output from Stage 1 to the Nginx html directory
-COPY --from=build --chown=nginx:nginx /app/node_modules /usr/share/nginx/html/node_modules
-COPY --from=build --chown=nginx:nginx /app/package.json /usr/share/nginx/html/package.json
+# # Use an official Nginx runtime as a parent image
 
-# Make port 80 available to the world outside this container
-EXPOSE 80
+
+# FROM nginx:latest As serve
+
+# # Copy the build output from Stage 1 to the Nginx html directory
+# COPY --from=build --chown=nginx:nginx /app/node_modules /usr/share/nginx/html/node_modules
+# COPY --from=build --chown=nginx:nginx /app/package.json /usr/share/nginx/html/package.json
+
+# # Make port 80 available to the world outside this container
+# EXPOSE 80
