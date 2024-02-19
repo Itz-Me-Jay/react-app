@@ -8,7 +8,7 @@ services: # Define the services that make up your app
     ports: # Expose ports
       - "80:80" # Map TCP port 80 in the service to port 80 on the load balancer
     deploy: # Specify deployment-related preferences
-      replicas: 3 # Number of containers to run for this service
+      replicas: 1 # Number of containers to run for this service
       update_config: # Configuration for how to update containers
         parallelism: 1 # Number of containers to update at a time
         delay: 10s # Delay between updates
