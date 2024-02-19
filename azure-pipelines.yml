@@ -10,13 +10,12 @@ resources:
 - repo: self
 
 pool:
-  name: 'project-pool' # Adjust as needed for your Azure Pipelines agent
+  name: project-pool 
 
 variables:
   # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: '83e85eabbfc5'
+  dockerRegistryServiceConnection: 'f9975a12-2adb-465a-a9c1-83e85eabbfc5'
   azureSubscription: 'project1React' # Subscription name in Azure
-  azureContainerRegistry: '{"loginServer":"project1react.azurecr.io", "id" : "/subscriptions/f9975a12-2adb-465a-a9c1-83e85eabbfc5/resourceGroups/React/providers/Microsoft.ContainerRegistry/registries/project1React"}'
   imageRepository: 'reactacr1'
   containerRegistry: 'reactacr1.azurecr.io'
   dockerfile: '$(Build.SourcesDirectory)/Dockerfile' 
