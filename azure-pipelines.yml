@@ -26,24 +26,23 @@ stages:
   displayName: Build 
   jobs:
   - job: Build
-    displayName: Build
+  
+  steps: 
+  - task: Docker@1
+    displayName: Building an Image
+    inputs:
+      command: 'build'
+      Dockerfile: '**/Dockerfile'
+      repository: $(imageRepository)
+      displayName: Build
+      tags: |
+        $(tag)
 
-    steps:
-    - task: Docker@2  # Using Docker@2 as it's generally more up-to-date
-      displayName: Build an image
-      inputs:
-        command: build
-        dockerfile: $(dockerfile) 
-        repository: $(imageRepository)
-        containerRegistry: $(azureContainerRegistry)
-        tags: |
-          $(tag)
-
-    - task: Docker@2
-      displayName: Push docker image to container registry
-      inputs:
-        command: push
-        repository: $(imageRepository)
-        containerRegistry: $(azureContainerRegistry) 
-        tags: |
-          $(tag) 
+  - task: DockerCompose@2
+    inputs:
+      containerregistrytype: 'Azure Container Registry'
+      azureSubscription: 'Free Trial(f9975a12-2adb-465a-a9c1-83e85eabbfc5)'
+      azureContainerRegistry: '{"loginServer":"registrytestt.azurecr.io", "id" : "/subscriptions/f9975a12-2adb-465a-a9c1-83e85eabbfc5/resourceGroups/React/providers/Microsoft.ContainerRegistry/registries/registrytestt"}'
+      dockerComposeFile: '**/docker-compose.yml'
+      action: 'Run a Docker Compose command'
+      dockerComposeCommand: 'docker stack deploy -c docker-compose.yml nginx-react'
