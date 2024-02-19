@@ -15,9 +15,6 @@ pool:
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'f9975a12-2adb-465a-a9c1-83e85eabbfc5'
-    containerregistrytype: 'Azure Container Registry'
-    azureSubscription: 'Free Trial(f9975a12-2adb-465a-a9c1-83e85eabbfc5)'
-    azureContainerRegistry: '{"loginServer":"project1react.azurecr.io", "id" : "/subscriptions/f9975a12-2adb-465a-a9c1-83e85eabbfc5/resourceGroups/React/providers/Microsoft.ContainerRegistry/registries/project1React"}'
   imageRepository: 'reactacr1'
   containerRegistry: 'reactacr1.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
