@@ -22,7 +22,8 @@ RUN npm run build
 # Stage 2 : nginx 
 
 # Use an official Nginx runtime as a parent image
-ARG NGINX_VERSION=1.19.0
+ENV NGINX_VERSION 1.19.0
+
 FROM nginx:${NGINX_VERSION}-alpine As serve
 
 # Copy the build output from Stage 1 to the Nginx html directory
