@@ -1,8 +1,3 @@
-
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 - main
 
@@ -23,26 +18,40 @@ variables:
 
 stages:
 - stage: Build
-  displayName: Build 
+  displayName: Build and Push Image  
   jobs:
-  - job: Build
-  
-  steps: 
-  - task: Docker@1
-    displayName: Building an Image
-    inputs:
-      command: 'build'
-      Dockerfile: '**/Dockerfile'
-      repository: $(imageRepository)
-      displayName: Build
-      tags: |
-        $(tag)
+  - job: BuildAndPush
+    steps:
+    - task: Docker@2 
+      displayName: Build an image
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        repository: $(imageRepository)
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/Dockerfile' 
+        tags: |
+          $(tag)
 
-  - task: DockerCompose@2
-    inputs:
-      containerregistrytype: 'Azure Container Registry'
-      azureSubscription: 'Free Trial(f9975a12-2adb-465a-a9c1-83e85eabbfc5)'
-      azureContainerRegistry: '{"loginServer":"registrytestt.azurecr.io", "id" : "/subscriptions/f9975a12-2adb-465a-a9c1-83e85eabbfc5/resourceGroups/React/providers/Microsoft.ContainerRegistry/registries/registrytestt"}'
-      dockerComposeFile: '**/docker-compose.yml'
-      action: 'Run a Docker Compose command'
-      dockerComposeCommand: 'docker stack deploy -c docker-compose.yml nginx-react'
+    - task: Docker@2
+      displayName: Push to ACR
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        repository: $(imageRepository)
+        command: 'push'
+        tags: |
+          $(tag)
+
+- stage: Deploy 
+  displayName: Deploy Stack
+  jobs:
+  - job: DeployStack
+    steps:
+    - checkout: self 
+      persistCredentials: true 
+
+    - task: Bash@3 # Assuming Linux agent
+      displayName: 'Deploy Docker Stack'
+      inputs:
+        targetType: inline 
+        script: |
+          docker stack deploy -c docker-compose.yml nginx-react 
