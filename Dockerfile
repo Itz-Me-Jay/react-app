@@ -20,17 +20,17 @@ RUN npm run build
 
 EXPOSE 3000
 
+# ctrl + / for comment
+# # # Stage 2 : nginx 
 
-# # Stage 2 : nginx 
-
-# # Use an official Nginx runtime as a parent image
+# # # Use an official Nginx runtime as a parent image
 
 
-# FROM nginx:latest As serve
+# # FROM nginx:latest As serve
 
-# # Copy the build output from Stage 1 to the Nginx html directory
-# COPY --from=build --chown=nginx:nginx /app/node_modules /usr/share/nginx/html/node_modules
-# COPY --from=build --chown=nginx:nginx /app/package.json /usr/share/nginx/html/package.json
+# # # Copy the build output from Stage 1 to the Nginx html directory
+# # COPY --from=build --chown=nginx:nginx /app/node_modules /usr/share/nginx/html/node_modules
+# # COPY --from=build --chown=nginx:nginx /app/package.json /usr/share/nginx/html/package.json
 
-# # Make port 80 available to the world outside this container
-# EXPOSE 80
+# # # Make port 80 available to the world outside this container
+# # EXPOSE 80
