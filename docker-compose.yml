@@ -14,3 +14,9 @@ services: # Define the services that make up your app
         delay: 10s # Delay between updates
       restart_policy: # Configuration for when to restart containers
         condition: on-failure # Condition for restart - here, only if the container exits with an error
+
+/*
+
+Remember to run docker stack deploy -c docker-compose.yml react-app (replace react-app with your preferred stack name) to deploy your service stack. Make sure Docker Swarm mode is enabled by running docker swarm init if you haven’t done so already.
+
+/*
