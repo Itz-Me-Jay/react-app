@@ -1,9 +1,16 @@
-version: '3.8'
-services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 80:80
-    restart: always
+version: '3.8' # Specify the Docker Compose file version
+
+services: # Define the services that make up your app
+  react-app: # The name of the first service
+    build: # Information for Docker on how to build the image
+      context: . # The context is the current directory
+      dockerfile: Dockerfile # The Dockerfile located in the current directory
+    ports: # Expose ports
+      - "80:80" # Map TCP port 80 in the service to port 80 on the load balancer
+    deploy: # Specify deployment-related preferences
+      replicas: 3 # Number of containers to run for this service
+      update_config: # Configuration for how to update containers
+        parallelism: 1 # Number of containers to update at a time
+        delay: 10s # Delay between updates
+      restart_policy: # Configuration for when to restart containers
+        condition: on-failure # Condition for restart - here, only if the container exits with an error
