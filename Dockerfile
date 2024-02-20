@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Run npm run build when the container launches
-RUN npm run build
+RUN RUN --no-cache npm install --verbose 
 
 EXPOSE 3000
 
