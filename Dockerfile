@@ -9,7 +9,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # Install any needed packages specified in package.json
-Run npm cache clean --force \ && npm install --verbose
+RUN npm cache verify && npm install --verbose
 
 # Copy the current directory contents into the container at /app
 COPY . .
