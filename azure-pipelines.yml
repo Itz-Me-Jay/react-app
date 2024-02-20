@@ -32,26 +32,26 @@ stages:
         tags: |
           $(tag)
 
-#     - task: Docker@2
-#       displayName: Push to ACR
-#       inputs:
-#         containerregistrytype: 'Azure Container Registry'
-#         repository: $(imageRepository)
-#         command: 'push'
-#         tags: |
-#           $(tag)
+    - task: Docker@2
+      displayName: Push to ACR
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        repository: $(imageRepository)
+        command: 'push'
+        tags: |
+          $(tag)
 
-# - stage: Deploy 
-#   displayName: Deploy Stack
-#   jobs:
-#   - job: DeployStack
-#     steps:
-#     - checkout: self 
-#       persistCredentials: true 
+- stage: Deploy 
+  displayName: Deploy Stack
+  jobs:
+  - job: DeployStack
+    steps:
+    - checkout: self 
+      persistCredentials: true 
 
-#     - task: Bash@3 # Assuming Linux agent
-#       displayName: 'Deploy Docker Stack'
-#       inputs:
-#         targetType: inline 
-#         script: |
-#           docker stack deploy -c docker-compose.yml nginx-react 
+    - task: Bash@3 # Assuming Linux agent
+      displayName: 'Deploy Docker Stack'
+      inputs:
+        targetType: inline 
+        script: |
+          docker stack deploy -c docker-compose.yml nginx-react 
