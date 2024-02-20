@@ -1,7 +1,7 @@
 # Stage 1 : React Application
 
 # Use an official Node runtime as a parent image
-FROM node:14.15.0 
+FROM node:14          
 # Set the working directory in the container to /app
 WORKDIR /app
 
@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 
 # Run npm run build when the container launches
-RUN RUN --no-cache npm install --verbose 
+RUN npm run build
 
 EXPOSE 3000
 
